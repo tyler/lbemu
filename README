@@ -7,6 +7,7 @@ Velocity 2009.
 Dependencies:
 
 Danga::Socket (though future releases might switch to AnyEvent)
+YAML
 
 To start
 ========
@@ -39,15 +40,15 @@ What lbemu is
 
 lbemu is a no-frills web cluster emulator. It allows you to create fake
 webservers listening on many IPs or ports, which you can then configure into
-your load balancer or proxy. It is useful in tuning paramters on your load
+your load balancer or proxy. It is useful in tuning parameters on your load
 balancer and for comparing effectiveness of different load balancers, if you
 are evaluating hardware/software solutions.
 
 Lbemu contains a fake even-balanced CPU scheduler in order to emulate how much
 *time* it takes to process a request.
 
-- Specify a machine as having 1-n CPU's (lets say four)
-- Specify each CPU as being able to process n 'ticks' per second (lets say
+- Specify a machine as having 1-n CPU's (let's say four)
+- Specify each CPU as being able to process n 'ticks' per second (let's say
   5000)
 - lbemu runs at 50 'frames' per second. This is tunable in the top of your
   sourcecode if you frequently lag on a loop.
