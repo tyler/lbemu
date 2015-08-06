@@ -321,8 +321,24 @@ sub run_request {
     my $c    = shift;
     my $k    = shift;
 
-    if ($req->{ticks} != 0) {
-        push(@{$self->{queue}}, [ $c, $req, $req->{ticks}, $k ]);
+    my $ticks = $req->{ticks};
+
+    if ($ticks != 0) {
+        if (ref($ticks) eq "HASH") {
+            if ($ticks->{distribution} eq "exponential") {
+                my $a = $ticks->{a};
+                my $b = $ticks->{b};
+                my $c = $ticks->{c};
+                my $x = rand();
+                $ticks = int($a * $x ** $b + $c);
+                # print "exp dist: $a * $x ** $b + $c = $ticks\n";
+            } else {
+                print "unknown tick distribution: " . $ticks->{distribution} . "\n"
+                    if main::DEBUG > 0;
+            }
+        }
+        push(@{$self->{queue}}, [ $c, $req, $ticks, $k ]);
+
     } else {
         # return immediately.
         $self->send_response([ $c, $req, $req->{ticks}, $k ]);
